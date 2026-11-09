@@ -171,7 +171,7 @@ end $$;
 create or replace view public.repeat_fault_watch with (security_invoker=true) as
  select a.id asset_id,a.asset_tag,a.display_name,a.branch_id,count(i.id)::int incident_count
  from public.assets a join public.incidents i on i.asset_id=a.id
- where i.created_at >= now()-interval '30 days'
+ where i.created_at >= now()-interval '30 days' and i.created_at <= now()
  group by a.id,a.asset_tag,a.display_name,a.branch_id
  having count(i.id)>=3;
 

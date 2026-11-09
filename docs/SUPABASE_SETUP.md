@@ -14,7 +14,8 @@
    ('REPORTER-AUTH-UUID','Demo Branch Reporter','reporter@northline.demo','branch_reporter',
       (select id from public.branches where store_code='GP-MID-001'));
    ```
-6. Run `supabase/demo_incidents.sql` in the SQL Editor to add fictional sample incidents, including a repeat-fault asset and a separate-branch incident.\n7. Deploy the staff function and set its secret:
+6. Run `supabase/demo_incidents.sql` in the SQL Editor to add fictional sample incidents, including a repeat-fault asset and a separate-branch incident.
+7. Deploy the staff function and set its secret:
 
    ```bash
    npx supabase functions deploy admin-manage-staff
