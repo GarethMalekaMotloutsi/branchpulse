@@ -1,55 +1,182 @@
 # BranchPulse
 
-BranchPulse is a responsive retail branch technology incident-management prototype for the Melsoft Academy project. It centralises branch, asset and incident records, technician assignment, service activity and repeat-fault visibility.
+**Retail Branch Technology and Incident Management System**
 
-## MVP capabilities
-- Branch and asset register with synthetic Gauteng demo data.
-- Incident list, search and status filters.
-- Incident reporting, technician assignment, work progression, service activity and resolution.
-- Role-specific navigation for Administrator, Support Coordinator, Technician and Branch Reporter.
-- Repeat Fault Watch: assets with at least three incidents in the rolling 30-day window.
-- Supabase client integration and a PostgreSQL schema with RLS policies and guarded database functions.
+BranchPulse is a web-based application designed to help retail organisations manage technology incidents across multiple branches. It provides a central place to report technical problems, monitor affected equipment, coordinate technicians and identify recurring faults.
 
-## Run locally
-Requirements: Node.js 26.x (as specified in the implementation plan) and npm.
+The project was developed as part of the Melsoft Academy learning programme.
+
+## Project Overview
+
+Retail branches rely on technology such as barcode scanners, printers, workstations and network equipment to operate efficiently. When these devices experience problems, resolving the issue requires clear communication, proper incident records and visibility into the support process.
+
+BranchPulse aims to simplify this process by bringing incident reporting, equipment records, technician assignments and operational information into one platform.
+
+## Main Features
+
+- **Operations Dashboard:** View incident totals, urgent issues, technician assignments and recurring equipment faults.
+- **Incident Management:** Report, view and manage technical incidents.
+- **Technician Workflow:** Support incident assignment, progress tracking and resolution records.
+- **Asset Management:** Maintain records of technology equipment used across branches.
+- **Branch Management:** View and organise retail branch information.
+- **Staff Management:** Provide an interface for managing staff members and their roles.
+- **Repeat Fault Watch:** Highlight equipment experiencing three or more incidents within a rolling 30-day period.
+- **Responsive Interface:** Designed to work across desktop and smaller screens.
+
+## User Roles
+
+The application is designed around four operational roles:
+
+| Role | Responsibility |
+|---|---|
+| Administrator | Oversees the platform, staff and operational configuration |
+| Support Coordinator | Reviews incidents and coordinates technical support |
+| Technician | Works on assigned incidents and records progress |
+| Branch Reporter | Reports technical issues affecting branch operations |
+
+## Technology Stack
+
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Supabase (planned backend integration)
+- Lucide React
+- Vitest
+- React Testing Library
+
+## Getting Started
+
+### Requirements
+
+- Node.js 26.x
+- npm
+- Git
+- Visual Studio Code or another suitable code editor
+
+### Installation
+
+Clone the repository:
+
+```bash
+git clone https://github.com/GarethMalekaMotloutsi/branchpulse.git
+```
+
+Navigate into the project:
+
+```bash
+cd branchpulse
+```
+
+Install dependencies:
 
 ```bash
 npm install
-cp .env.example .env
+```
+
+Start the development server:
+
+```bash
 npm run dev
 ```
 
-With no Supabase environment variables, the app runs in **Demo Data** mode using fictional in-memory records so the screens and workflows can be reviewed. Changes in Demo Data mode are held in the current browser session only and are not a secure backend.
+Open the local address provided by Vite, normally:
 
-To connect Supabase:
-1. Create a Supabase project.
-2. Apply `supabase/migrations/202611090001_branchpulse_schema.sql` using the Supabase SQL editor or CLI.
-3. Create four synthetic Auth users and matching `profiles` rows. Use fictional email addresses and test-only passwords.
-4. Add `VITE_SUPABASE_URL` and `VITE_SUPABASE_ANON_KEY` to `.env`.
-5. Ensure the initial Administrator profile is provisioned through trusted SQL/admin setup, not public sign-up.
-6. Configure a JWT-verified `admin-manage-staff` Edge Function before enabling staff account creation in a hosted environment.
-
-The browser uses only the Supabase anon/publishable key. Never put `SUPABASE_SERVICE_ROLE_KEY` in a `VITE_` variable or frontend code.
-
-## Commands
-```bash
-npm test       # Vitest unit and component tests
-npm run lint   # TypeScript check
-npm run build  # Production build
-npm run check  # lint + tests + build
+```text
+http://localhost:5173
 ```
 
-## Demo data
-The fictional organisation is Northline Retail Demo, with Midrand Central, Sandton North and Pretoria East branches. The demo includes fictional equipment and incident records. Do not replace these with real retailer data.
+## Environment Configuration
 
-## Demo roles
-The role preview control is a **presentation-only demo switcher**. It is not authentication and must not be used to demonstrate real security. For permission verification, configure separate Supabase Auth users for each role and test the database RLS policies. No shared demo passwords are included in this repository.
+The project includes an `.env.example` file.
 
-## Known limitations
-- The demo fallback is not persistent and does not enforce server-side permissions.
-- The staff Edge Function, full Supabase Auth onboarding and complete per-role RLS test suite still need to be configured and verified.
-- Stitch exports S1-S11 and M1-M6 were not present in the source materials; the UI is an original implementation based on the written design tokens and screen inventory, not a pixel-matched Stitch export.
-- The full nine-phase TDD plan is not complete. This repository is an accelerated MVP implementation and must not be represented as having passed all planned tests or as production-ready.
+For a local demo, the application can run without connecting a Supabase project.
 
-## Security
-Never commit `.env`, passwords, service-role keys, real store data or personal information. Only `.env.example` belongs in version control.
+To configure a Supabase environment, create a `.env` file using the example configuration and supply your own project credentials:
+
+```env
+VITE_SUPABASE_URL=
+VITE_SUPABASE_ANON_KEY=
+```
+
+Never commit private service-role keys or other secrets to the repository.
+
+## Project Structure
+
+```text
+branchpulse/
+├── docs/
+│   ├── BranchPulse_PRD.md
+│   ├── BranchPulse_IMPLEMENTATION_PLAN.md
+│   └── other project documentation
+├── src/
+│   ├── lib/
+│   ├── App.tsx
+│   ├── styles.css
+│   └── test-setup.ts
+├── supabase/
+│   ├── migrations/
+│   ├── functions/
+│   └── seed.sql
+├── tests/
+│   ├── components/
+│   └── unit/
+├── public/
+├── package.json
+├── vite.config.ts
+└── README.md
+```
+
+## Current Implementation Status
+
+The current version provides a functional demonstration of the main application interface and incident-management workflows.
+
+The dashboard, demo incident data, navigation and core demonstration interactions are available.
+
+The following work remains subject to verification and completion:
+
+- Supabase database connection and persistent data storage.
+- Production authentication and role-based security verification.
+- Automated test configuration and successful execution of the complete test suite.
+- Production deployment and live environment verification.
+
+The demonstration role selector is intended for preview purposes. It should not be treated as production authentication or a security boundary.
+
+## Testing
+
+The project includes automated tests using Vitest and React Testing Library.
+
+Run the test suite:
+
+```bash
+npm run test
+```
+
+Run the project checks:
+
+```bash
+npm run check
+```
+
+The automated test configuration is still being finalised. A successful browser demonstration should not be interpreted as confirmation that all automated tests have passed.
+
+## Future Improvements
+
+- Complete Supabase integration.
+- Strengthen authentication and access controls.
+- Complete automated unit and component testing.
+- Improve reporting and operational analytics.
+- Complete production deployment.
+- Extend technician service-history functionality.
+
+## Project Documentation
+
+The repository includes the Product Requirements Document (PRD) and Implementation Plan. These documents describe the intended scope, workflows, technical approach and development requirements.
+
+## Repository
+
+[BranchPulse – GitHub](https://github.com/GarethMalekaMotloutsi/branchpulse)
+
+---
+
+**BranchPulse | Melsoft Academy Project**
