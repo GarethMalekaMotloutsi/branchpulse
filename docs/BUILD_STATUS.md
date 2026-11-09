@@ -6,10 +6,10 @@ This source package is an accelerated MVP assembled from BranchPulse PRD v0.2 an
 - React/Vite/TypeScript application shell and responsive operations UI.
 - Fictional demo branches, assets, staff and incidents.
 - Role-specific navigation and demo-only role preview.
-- Incident reporting, assignment, technician progression, resolution and service activity flows.
+- Incident reporting, assignment, technician progression, progress notes, service activity and resolution flows.
 - Repeat Fault Watch using the >=3 incidents / rolling 30-day rule.
 - Supabase email/password sign-in gate when public Supabase configuration is supplied.
-- Supabase database schema, RLS policies, database functions and a protected staff-management Edge Function.
+- Supabase database schema, RLS policies, database functions and a protected staff-management Edge Function for staff creation/deactivation.
 - Unit and component tests authored.
 
 ## Not verified in this environment

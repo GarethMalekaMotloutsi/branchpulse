@@ -3,7 +3,7 @@ create extension if not exists pgcrypto;
 
 create table if not exists public.branches (
  id uuid primary key default gen_random_uuid(),
- store_code text not null unique,
+ store_code text not null unique check(length(trim(store_code))>0),
  name text not null check (length(trim(name))>0),
  province text not null check (length(trim(province))>0),
  city text not null check (length(trim(city))>0),
@@ -25,7 +25,7 @@ create table if not exists public.profiles (
 create table if not exists public.assets (
  id uuid primary key default gen_random_uuid(),
  branch_id uuid not null references public.branches(id) on delete restrict,
- asset_tag text not null unique,
+ asset_tag text not null unique check(length(trim(asset_tag))>0),
  display_name text not null check(length(trim(display_name))>0),
  category text not null check(category in ('scanner','printer','pos_terminal','workstation','network_device','other')),
  manufacturer text, model text, serial_number text, installation_date date,
@@ -81,6 +81,15 @@ create index if not exists idx_incidents_assigned on public.incidents(assigned_t
 create index if not exists idx_incidents_asset_date on public.incidents(asset_id,created_at desc);
 create index if not exists idx_updates_incident on public.incident_updates(incident_id,created_at);
 create index if not exists idx_visits_incident on public.technician_visits(incident_id,activity_date);
+
+create or replace function public.normalise_branch_code() returns trigger language plpgsql as $$
+begin
+ new.store_code:=upper(trim(new.store_code));
+ return new;
+end $$;
+drop trigger if exists trg_normalise_branch_code on public.branches;
+create trigger trg_normalise_branch_code before insert or update of store_code on public.branches
+for each row execute function public.normalise_branch_code();
 
 create or replace function public.current_role() returns text language sql stable security definer set search_path=public as $$
  select role from public.profiles where id=auth.uid() and is_active=true limit 1;
