@@ -14,13 +14,13 @@
    ('REPORTER-AUTH-UUID','Demo Branch Reporter','reporter@northline.demo','branch_reporter',
       (select id from public.branches where store_code='GP-MID-001'));
    ```
-6. Deploy the staff function and set its secret:
+6. Run `supabase/demo_incidents.sql` in the SQL Editor to add fictional sample incidents, including a repeat-fault asset and a separate-branch incident.\n7. Deploy the staff function and set its secret:
 
    ```bash
    npx supabase functions deploy admin-manage-staff
    npx supabase secrets set SUPABASE_SERVICE_ROLE_KEY=YOUR_SERVICE_ROLE_KEY
    ```
 
-7. Sign in through the application. When Supabase variables are present, the demo role switcher is removed and the application requires a real Supabase session.
+8. Sign in through the application. When Supabase variables are present, the demo role switcher is removed and the application requires a real Supabase session.
 
 Do not place a service-role key in `.env` values beginning with `VITE_`, frontend source, screenshots or GitHub. Do not use real staff or retailer data.
