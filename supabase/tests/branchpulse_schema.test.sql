@@ -1,0 +1,12 @@
+begin;
+select plan(8);
+select has_table('public','profiles','profiles table exists');
+select has_table('public','branches','branches table exists');
+select has_table('public','assets','assets table exists');
+select has_table('public','incidents','incidents table exists');
+select has_table('public','incident_updates','incident_updates table exists');
+select has_table('public','technician_visits','technician_visits table exists');
+select has_table('public','incident_status_history','incident_status_history table exists');
+select ok((select relrowsecurity from pg_class where oid='public.incidents'::regclass),'incidents enforce row-level security');
+select * from finish();
+rollback;
