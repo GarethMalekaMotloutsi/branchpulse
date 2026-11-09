@@ -98,7 +98,11 @@ export default function App(){
    if(a.data)setAssets(a.data as Asset[]);
    if(i.data)setIncidents(i.data as Incident[]);
    if(s.data&&role==="administrator")setStaff(s.data as Staff[]);
-   const {data:u}=await supabase.from("incident_updates").select("*");
+
+   const client = supabase;
+if (!client) return;
+const { data: u } = await client.from("incident_updates").select("*");
+
    if(u)setUpdates(u as {id:string;incident_id:string;author_id:string;note:string;created_at:string}[]);
   });
  },[authUser,role]);
